@@ -27,6 +27,7 @@ class _CalculatorState extends State<Calculator> {
           onPressed: () {},
           child: Text(
             btntxt,
+            textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 35,
               color: txtclr,
@@ -178,6 +179,35 @@ class _CalculatorState extends State<Calculator> {
             ),
             SizedBox(
               height: 10,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                  onPressed: () {},
+                  child: Text(
+                    '0',
+                    style: TextStyle(
+                      fontSize: 35,
+                    ),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    shape: StadiumBorder(),
+                    padding: EdgeInsets.fromLTRB(34, 20, 118, 20),
+                    primary: Colors.grey.shade800,
+                  ),
+                ),
+                calcButton(
+                  '.',
+                  Colors.grey.shade800,
+                  Colors.white,
+                ),
+                calcButton(
+                  '=',
+                  Colors.amber.shade700,
+                  Colors.white,
+                )
+              ],
             ),
           ],
         ),
