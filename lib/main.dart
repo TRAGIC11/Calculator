@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() => runApp(Myapp());
 
@@ -18,11 +19,17 @@ class Calculator extends StatefulWidget {
 }
 
 class _CalculatorState extends State<Calculator> {
-  Widget calcButton(String btntxt, Color btnclr, Color txtclr) {
+  String _history = '0';
+  String _expression = '1';
+
+  Widget calcButton(
+    String btntxt,
+    Color btnclr,
+  ) {
     return Container(
       child: SizedBox(
-        height: 80,
-        width: 80,
+        height: 70,
+        width: 70,
         child: ElevatedButton(
           onPressed: () {},
           child: Text(
@@ -30,13 +37,14 @@ class _CalculatorState extends State<Calculator> {
             textAlign: TextAlign.center,
             style: TextStyle(
               fontSize: 35,
-              color: txtclr,
+              color: btnclr,
             ),
           ),
           style: ElevatedButton.styleFrom(
             shape: CircleBorder(),
-            padding: EdgeInsets.all(20),
-            primary: btnclr,
+            padding: EdgeInsets.all(15),
+            side: BorderSide(width: 2.0, color: btnclr),
+            primary: Colors.blueGrey[900],
           ),
         ),
       ),
@@ -46,17 +54,48 @@ class _CalculatorState extends State<Calculator> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Colors.blueGrey[900],
       appBar: AppBar(
         title: Text('Calculator'),
-        backgroundColor: Colors.black,
+        backgroundColor: Colors.blueGrey[900],
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 5),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.end,
           children: [
-            Row(
+            Container(
+              child: Padding(
+                padding: const EdgeInsets.only(right: 12),
+                child: Text(
+                  _history,
+                  style: GoogleFonts.rubik(
+                    textStyle: TextStyle(
+                      fontSize: 24,
+                      color: Color(0xFF545F61),
+                    ),
+                  ),
+                ),
+              ),
+              alignment: Alignment(1.0, 1.0),
+            ),
+            Container(
+              child: Padding(
+                padding: const EdgeInsets.all(12),
+                child: Text(
+                  _expression,
+                  style: GoogleFonts.rubik(
+                    textStyle: TextStyle(
+                      fontSize: 48,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+              alignment: Alignment(1.0, 1.0),
+            ),
+            SizedBox(height: 40),
+            /* Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Padding(
@@ -67,29 +106,25 @@ class _CalculatorState extends State<Calculator> {
                   ),
                 ),
               ],
-            ),
+            ), */
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 calcButton(
                   'AC',
-                  Colors.grey,
-                  Colors.black,
+                  Colors.white,
                 ),
                 calcButton(
                   '+/-',
-                  Colors.grey,
-                  Colors.black,
+                  Colors.white,
                 ),
                 calcButton(
                   '%',
-                  Colors.grey,
-                  Colors.black,
+                  Colors.white,
                 ),
                 calcButton(
                   '/',
                   Colors.amber.shade700,
-                  Colors.white,
                 ),
               ],
             ),
@@ -101,23 +136,19 @@ class _CalculatorState extends State<Calculator> {
               children: [
                 calcButton(
                   '7',
-                  Colors.grey.shade800,
                   Colors.white,
                 ),
                 calcButton(
                   '8',
-                  Colors.grey.shade800,
                   Colors.white,
                 ),
                 calcButton(
                   '9',
-                  Colors.grey.shade800,
                   Colors.white,
                 ),
                 calcButton(
                   'x',
                   Colors.amber.shade700,
-                  Colors.white,
                 ),
               ],
             ),
@@ -129,23 +160,19 @@ class _CalculatorState extends State<Calculator> {
               children: [
                 calcButton(
                   '4',
-                  Colors.grey.shade800,
                   Colors.white,
                 ),
                 calcButton(
                   '5',
-                  Colors.grey.shade800,
                   Colors.white,
                 ),
                 calcButton(
                   '6',
-                  Colors.grey.shade800,
                   Colors.white,
                 ),
                 calcButton(
                   '-',
                   Colors.amber.shade700,
-                  Colors.white,
                 ),
               ],
             ),
@@ -157,23 +184,19 @@ class _CalculatorState extends State<Calculator> {
               children: [
                 calcButton(
                   '1',
-                  Colors.grey.shade800,
                   Colors.white,
                 ),
                 calcButton(
                   '2',
-                  Colors.grey.shade800,
                   Colors.white,
                 ),
                 calcButton(
                   '3',
-                  Colors.grey.shade800,
                   Colors.white,
                 ),
                 calcButton(
                   '+',
                   Colors.amber.shade700,
-                  Colors.white,
                 ),
               ],
             ),
@@ -189,25 +212,31 @@ class _CalculatorState extends State<Calculator> {
                     '0',
                     style: TextStyle(
                       fontSize: 35,
+                      color: Colors.white,
                     ),
                   ),
                   style: ElevatedButton.styleFrom(
                     shape: StadiumBorder(),
-                    padding: EdgeInsets.fromLTRB(34, 20, 118, 20),
-                    primary: Colors.grey.shade800,
+                    padding: EdgeInsets.fromLTRB(34, 15, 110, 15),
+                    primary: Colors.blueGrey[900],
+                    side: BorderSide(
+                      color: Colors.white,
+                      width: 2.0,
+                    ),
                   ),
                 ),
                 calcButton(
                   '.',
-                  Colors.grey.shade800,
                   Colors.white,
                 ),
                 calcButton(
                   '=',
                   Colors.amber.shade700,
-                  Colors.white,
                 )
               ],
+            ),
+            SizedBox(
+              height: 20,
             ),
           ],
         ),
