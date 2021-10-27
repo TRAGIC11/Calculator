@@ -14,29 +14,92 @@ class Myapp extends StatelessWidget {
 }
 
 class Calculator extends StatefulWidget {
+  //Calculator({Key key}) : super(key: key);
+
   @override
   _CalculatorState createState() => _CalculatorState();
 }
 
 class _CalculatorState extends State<Calculator> {
+  late int firstNum;
+  late int secondNum;
+  String history = '';
+  String textToDisplay = '';
+  late String res;
+  late String operation;
+
+  void btnOnClick(String btnVal) {
+    print(btnVal);
+    if (btnVal == 'C') {
+      textToDisplay = '';
+      firstNum = 0;
+
+      secondNum = 0;
+      res = '';
+    } else if (btnVal == 'AC') {
+      textToDisplay = '';
+
+      firstNum = 0;
+      secondNum = 0;
+      res = '';
+      history = '';
+    } else if (btnVal == '+' ||
+        btnVal == '-' ||
+        btnVal == 'x' ||
+        btnVal == '/') {
+      firstNum = int.parse(textToDisplay);
+      res = '';
+      operation = btnVal;
+    } else if (btnVal == '=') {
+      secondNum = int.parse(textToDisplay);
+
+      if (operation == '+') {
+        res = (firstNum + secondNum).toString();
+        history =
+            firstNum.toString() + operation.toString() + secondNum.toString();
+      }
+      if (operation == '-') {
+        res = (firstNum - secondNum).toString();
+        history =
+            firstNum.toString() + operation.toString() + secondNum.toString();
+      }
+      if (operation == '/') {
+        res = (firstNum / secondNum).toString();
+        history =
+            firstNum.toString() + operation.toString() + secondNum.toString();
+      }
+      if (operation == 'x') {
+        res = (firstNum * secondNum).toString();
+        history =
+            firstNum.toString() + operation.toString() + secondNum.toString();
+      }
+    } else {
+      res = int.parse(textToDisplay + btnVal).toString();
+    }
+    setState(() {
+      textToDisplay = res;
+    });
+  }
+
   String _history = '0';
   String _expression = '1';
 
   Widget calcButton(
     String btntxt,
     Color btnclr,
+    Function callBack,
   ) {
     return Container(
       child: SizedBox(
         height: 70,
         width: 70,
         child: ElevatedButton(
-          onPressed: () {},
+          onPressed: callBack(btntxt),
           child: Text(
             btntxt,
             textAlign: TextAlign.center,
             style: TextStyle(
-              fontSize: 35,
+              fontSize: 30,
               color: btnclr,
             ),
           ),
@@ -113,18 +176,22 @@ class _CalculatorState extends State<Calculator> {
                 calcButton(
                   'AC',
                   Colors.white,
+                  btnOnClick,
                 ),
                 calcButton(
-                  '+/-',
+                  'C',
                   Colors.white,
+                  btnOnClick,
                 ),
                 calcButton(
                   '%',
                   Colors.white,
+                  btnOnClick,
                 ),
                 calcButton(
                   '/',
                   Colors.amber.shade700,
+                  btnOnClick,
                 ),
               ],
             ),
@@ -137,18 +204,22 @@ class _CalculatorState extends State<Calculator> {
                 calcButton(
                   '7',
                   Colors.white,
+                  btnOnClick,
                 ),
                 calcButton(
                   '8',
                   Colors.white,
+                  btnOnClick,
                 ),
                 calcButton(
                   '9',
                   Colors.white,
+                  btnOnClick,
                 ),
                 calcButton(
                   'x',
                   Colors.amber.shade700,
+                  btnOnClick,
                 ),
               ],
             ),
@@ -161,18 +232,22 @@ class _CalculatorState extends State<Calculator> {
                 calcButton(
                   '4',
                   Colors.white,
+                  btnOnClick,
                 ),
                 calcButton(
                   '5',
                   Colors.white,
+                  btnOnClick,
                 ),
                 calcButton(
                   '6',
                   Colors.white,
+                  btnOnClick,
                 ),
                 calcButton(
                   '-',
                   Colors.amber.shade700,
+                  btnOnClick,
                 ),
               ],
             ),
@@ -185,18 +260,22 @@ class _CalculatorState extends State<Calculator> {
                 calcButton(
                   '1',
                   Colors.white,
+                  btnOnClick,
                 ),
                 calcButton(
                   '2',
                   Colors.white,
+                  btnOnClick,
                 ),
                 calcButton(
                   '3',
                   Colors.white,
+                  btnOnClick,
                 ),
                 calcButton(
                   '+',
                   Colors.amber.shade700,
+                  btnOnClick,
                 ),
               ],
             ),
@@ -228,10 +307,12 @@ class _CalculatorState extends State<Calculator> {
                 calcButton(
                   '.',
                   Colors.white,
+                  btnOnClick,
                 ),
                 calcButton(
                   '=',
                   Colors.amber.shade700,
+                  btnOnClick,
                 )
               ],
             ),
