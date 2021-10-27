@@ -21,37 +21,52 @@ class Calculator extends StatefulWidget {
 }
 
 class _CalculatorState extends State<Calculator> {
-  late int firstNum;
-  late int secondNum;
+  var firstNum;
+  var secondNum;
   String history = '';
   String textToDisplay = '';
-  late String res;
-  late String operation;
+  String res = '';
+  String operation = '';
 
   void btnOnClick(String btnVal) {
     print(btnVal);
     if (btnVal == 'C') {
       textToDisplay = '';
       firstNum = 0;
-
       secondNum = 0;
-      res = '';
+      res = '0';
     } else if (btnVal == 'AC') {
       textToDisplay = '';
-
       firstNum = 0;
       secondNum = 0;
-      res = '';
+      res = '0';
       history = '';
     } else if (btnVal == '+' ||
         btnVal == '-' ||
         btnVal == 'x' ||
-        btnVal == '/') {
-      firstNum = int.parse(textToDisplay);
+        btnVal == '/' ||
+        btnVal == '%') {
+      if (textToDisplay.contains('.')) {
+        firstNum = double.parse(
+          '$textToDisplay',
+        );
+      } else {
+        firstNum = int.parse(
+          '$textToDisplay',
+        );
+      }
       res = '';
       operation = btnVal;
     } else if (btnVal == '=') {
-      secondNum = int.parse(textToDisplay);
+      if (textToDisplay.contains('.')) {
+        secondNum = double.parse(
+          '$textToDisplay',
+        );
+      } else {
+        secondNum = int.parse(
+          '$textToDisplay',
+        );
+      }
 
       if (operation == '+') {
         res = (firstNum + secondNum).toString();
@@ -73,16 +88,22 @@ class _CalculatorState extends State<Calculator> {
         history =
             firstNum.toString() + operation.toString() + secondNum.toString();
       }
+      if (operation == '%') {
+        res = (firstNum % secondNum).toString();
+        history =
+            firstNum.toString() + operation.toString() + secondNum.toString();
+      }
     } else {
-      res = int.parse(textToDisplay + btnVal).toString();
+      if (textToDisplay.contains('.')) {
+        res = double.parse(textToDisplay + btnVal).toString();
+      } else {
+        res = int.parse(textToDisplay + btnVal).toString();
+      }
     }
     setState(() {
       textToDisplay = res;
     });
   }
-
-  String _history = '0';
-  String _expression = '1';
 
   Widget calcButton(
     String btntxt,
@@ -94,7 +115,7 @@ class _CalculatorState extends State<Calculator> {
         height: 70,
         width: 70,
         child: ElevatedButton(
-          onPressed: callBack(btntxt),
+          onPressed: () => callBack(btntxt),
           child: Text(
             btntxt,
             textAlign: TextAlign.center,
@@ -131,7 +152,7 @@ class _CalculatorState extends State<Calculator> {
               child: Padding(
                 padding: const EdgeInsets.only(right: 12),
                 child: Text(
-                  _history,
+                  history,
                   style: GoogleFonts.rubik(
                     textStyle: TextStyle(
                       fontSize: 24,
@@ -146,7 +167,7 @@ class _CalculatorState extends State<Calculator> {
               child: Padding(
                 padding: const EdgeInsets.all(12),
                 child: Text(
-                  _expression,
+                  textToDisplay,
                   style: GoogleFonts.rubik(
                     textStyle: TextStyle(
                       fontSize: 48,
@@ -286,7 +307,7 @@ class _CalculatorState extends State<Calculator> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () => btnOnClick('0'),
                   child: Text(
                     '0',
                     style: TextStyle(
